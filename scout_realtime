@@ -1,0 +1,45 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides: scout_realtime
+# Required-Start: $all $all
+# Required-Stop: $all $all
+# Default-Start: 2 3 4 5
+# Default-Stop: S 0 1 6
+# Short-Description: initscript for scout_realtime
+# Description: initscript for scout_realtime
+### END INIT INFO
+
+set -e
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME="Scout_realtime service"
+
+d_start() {
+    scout_realtime --port 9997
+}
+
+d_stop() {
+    scout_realtime stop
+}
+
+case "$1" in
+start)
+echo "Starting $NAME..."
+d_start
+;;
+stop)
+echo "Stopping $NAME..."
+d_stop
+;;
+restart|force-reload)
+echo "Restarting $NAME..."
+d_stop
+d_start
+;;
+*)
+echo "Usage: sudo /etc/init.d/youtrack {start|stop|restart}" >&2
+exit 1
+;;
+esac
+
+exit 0
